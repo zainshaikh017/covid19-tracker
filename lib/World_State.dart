@@ -62,100 +62,98 @@ class _World_StateState extends State<World_State> with TickerProviderStateMixin
 
 
 
-      body: SafeArea(
-
-
-
-
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                FutureBuilder(
-                  future:getworldstateApi(),
-                  builder: (context, snapshot) {
-
-                if(!snapshot.hasData){
-                  return Expanded(
-                      flex: 1,
-                      child: SpinKitFadingCircle(
-                    color: Colors.black,
-                        size: 50.0,
-                        controller: _controller,
-                  ));
-                  }
-                  else{
-                    return Column(
-                      children: [
-                      // SizedBox(height: MediaQuery.of(context).size.height*.1,),
-                      PieChart(
-                        chartValuesOptions: const ChartValuesOptions(
-                          showChartValuesInPercentage: true
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  FutureBuilder(
+                    future:getworldstateApi(),
+                    builder: (context, snapshot) {
+        
+                  if(!snapshot.hasData){
+                    return Expanded(
+                        flex: 1,
+                        child: SpinKitFadingCircle(
+                      color: Colors.black,
+                          size: 50.0,
+                          controller: _controller,
+                    ));
+                    }
+                    else{
+                      return Column(
+                        children: [
+                        // SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                        PieChart(
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValuesInPercentage: true
+                          ),
+                          dataMap: {
+                            "Total":double.parse(snapshot.data!.cases.toString()),
+                            "Recovered":double.parse(snapshot.data!.recovered.toString()),
+                            "Deaths":double.parse(snapshot.data!.deaths.toString()),
+        
+                          },
+                          chartRadius: MediaQuery.of(context).size.width/3.2,
+                          legendOptions: const LegendOptions(
+                              legendPosition: LegendPosition.left
+                          ),
+                          animationDuration: const Duration(milliseconds: 1200),
+                          chartType:  ChartType.ring,
+                          colorList: colorlist ,
+        
                         ),
-                        dataMap: {
-                          "Total":double.parse(snapshot.data!.cases.toString()),
-                          "Recovered":double.parse(snapshot.data!.recovered.toString()),
-                          "Deaths":double.parse(snapshot.data!.deaths.toString()),
-
-                        },
-                        chartRadius: MediaQuery.of(context).size.width/3.2,
-                        legendOptions: const LegendOptions(
-                            legendPosition: LegendPosition.left
-                        ),
-                        animationDuration: const Duration(milliseconds: 1200),
-                        chartType:  ChartType.ring,
-                        colorList: colorlist ,
-
-                      ),
-                      Padding(
-                        padding:EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height*.06),
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Reusable_Row(title: "Total Cases", value: snapshot.data!.cases.toString()),
-                              Reusable_Row(title: "Deaths", value: snapshot.data!.deaths.toString()),
-                              Reusable_Row(title: "Recovered", value: snapshot.data!.recovered.toString()),
-                              Reusable_Row(title: "Active", value: snapshot.data!.active.toString()),
-                              Reusable_Row(title: "Critical", value: snapshot.data!.critical.toString()),
-                              Reusable_Row(title: "Today Deaths", value: snapshot.data!.todayDeaths.toString()),
-                              Reusable_Row(title: "Today Recovered", value: snapshot.data!.todayRecovered.toString()),
-                            ],
+                        Padding(
+                          padding:EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height*.06),
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Reusable_Row(title: "Total Cases", value: snapshot.data!.cases.toString()),
+                                Reusable_Row(title: "Deaths", value: snapshot.data!.deaths.toString()),
+                                Reusable_Row(title: "Recovered", value: snapshot.data!.recovered.toString()),
+                                Reusable_Row(title: "Active", value: snapshot.data!.active.toString()),
+                                Reusable_Row(title: "Critical", value: snapshot.data!.critical.toString()),
+                                Reusable_Row(title: "Today Deaths", value: snapshot.data!.todayDeaths.toString()),
+                                Reusable_Row(title: "Today Recovered", value: snapshot.data!.todayRecovered.toString()),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: (){
-
-
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                            return const Countries_Screen();
-                          },));
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: const Color(0xff1aa260),
-                              borderRadius: BorderRadius.circular(10)
+                        InkWell(
+                          onTap: (){
+        
+        
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                              return const Countries_Screen();
+                            },));
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: const Color(0xff1aa260),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: const Center(
+                              child: Text('Track Countries'),
+                            ),
                           ),
-                          child: const Center(
-                            child: Text('Track Countries'),
-                          ),
-                        ),
-                      )
-
-
-
-                    ],);
-                  }
-                },),
-
-
-
-
-
-
-      ],),
-          )),
+                        )
+        
+        
+        
+                      ],);
+                    }
+                  },),
+        
+        
+        
+        
+        
+        
+        ],),
+            )),
+      ),
 
     );
   }

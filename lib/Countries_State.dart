@@ -39,7 +39,6 @@ class _Countries_ScreenState extends State<Countries_Screen> {
     return Scaffold(
 
 
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
